@@ -93,6 +93,7 @@ export enum LineAnimateType {
   Normal, // 水流
   Beads, // 水珠流动
   Dot, // 圆点
+  Line
 }
 
 export interface ColorStop {
@@ -207,15 +208,15 @@ export interface Pen extends Rect {
   iconWeight?: string;
   iconSize?: number;
   iconAlign?:
-    | 'top'
-    | 'bottom'
-    | 'left'
-    | 'right'
-    | 'left-top'
-    | 'right-top'
-    | 'left-bottom'
-    | 'right-bottom'
-    | 'center';
+  | 'top'
+  | 'bottom'
+  | 'left'
+  | 'right'
+  | 'left-top'
+  | 'right-top'
+  | 'left-bottom'
+  | 'right-bottom'
+  | 'center';
   imageRatio?: boolean;
 
   disableInput?: boolean;

@@ -313,7 +313,7 @@ function rgbaToHex(value) {
     //不符合rgb或rgb规则直接return
     if (array.length < 3) return '';
     value = '#';
-    for (let i = 0, color; (color = array[i++]); ) {
+    for (let i = 0, color; (color = array[i++]);) {
       if (i < 4) {
         //前三位转换成16进制
         color = parseInt(color.replace(/[^\d]/gi, ''), 10).toString(16);
@@ -597,7 +597,7 @@ function getAngle(p1: Point, p2: Point, p3: Point) {
   return (
     (Math.acos(
       (a.x * b.x + a.y * b.y) /
-        (Math.sqrt(a.x * a.x + a.y * a.y) * Math.sqrt(b.x * b.x + b.y * b.y))
+      (Math.sqrt(a.x * a.x + a.y * a.y) * Math.sqrt(b.x * b.x + b.y * b.y))
     ) /
       Math.PI) *
     180
@@ -1827,13 +1827,28 @@ export function setCtxLineAnimate(
         ctx.lineDashOffset = pen.length - pen.calculative.animatePos;
       }
       len =
+        pen.calculative.animateDotSize || pen.calculative.lineWidth * 2 || 10;
+      if (len < 10) {
+        len = 10;
+      }
+      ctx.lineWidth =
+        (pen.calculative.animateLineWidth || len) * store.data.scale;
+      ctx.setLineDash([0.1, pen.length]);
+      break;
+    case LineAnimateType.Line:
+      if (pen.animateReverse) {
+        ctx.lineDashOffset = pen.calculative.animatePos;
+      } else {
+        ctx.lineDashOffset = pen.length - pen.calculative.animatePos;
+      }
+      len =
         pen.calculative.animateDotSize || pen.calculative.lineWidth * 2 || 6;
       if (len < 6) {
         len = 6;
       }
       ctx.lineWidth =
         (pen.calculative.animateLineWidth || len) * store.data.scale;
-      ctx.setLineDash([0.1, pen.length]);
+      ctx.setLineDash([5, 5]);
       break;
     default:
       if (pen.animateReverse) {
@@ -1883,7 +1898,7 @@ export function renderAnchor(
 
   const active =
     pen.calculative.canvas.store.activeAnchor ===
-      pen.calculative.activeAnchor && pen.calculative.activeAnchor === pt;
+    pen.calculative.activeAnchor && pen.calculative.activeAnchor === pt;
   let r = 3;
   if (pen.calculative.lineWidth > 3) {
     r = pen.calculative.lineWidth;
